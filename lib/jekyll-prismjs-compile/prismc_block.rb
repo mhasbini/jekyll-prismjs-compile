@@ -1,33 +1,33 @@
 require "execjs"
-require "pry"
 require "json"
 
 module Jekyll
-  class PrismCompileBlock < Liquid::Block
-    # include Liquid::StandardFilters
+  module PrismJsCompile
+    class Block < Liquid::Block
+      # include Liquid::StandardFilters
+      def initialize(tag_name, language, tokens)
+        super
+        @language = language.strip
+      end
 
-    def initialize(tag_name, language, tokens)
-      super
-      @language = language.strip
-    end
+      def render(context)
+        # add option to escape html (use h(super))
+        code = JSON.generate(super.strip)
 
-    def render(context)
-      # add option to escape html (use h(super))
-      code = JSON.generate(super.strip)
+        path = __dir__ + "/prism.js"
+        # TODO load only once
+        prismSource = File.read(path)
 
-      path = __dir__ + "/prism.js"
-      # TODO load only once
-      prismSource = File.read(path)
+        context = ExecJS.compile(prismSource)
 
-      context = ExecJS.compile(prismSource)
+        output = context.eval(%Q[Prism.highlight(#{code}, Prism.languages.#{@language}, '#{@language}')])
 
-      output = context.eval(%Q[Prism.highlight(#{code}, Prism.languages.#{@language}, '#{@language}')])
-
-      <<-HTML
-  <pre class="language-#{@language}"><code class='language-#{@language}'>#{output}</code></pre>
-      HTML
+        <<-HTML
+    <pre class="language-#{@language}"><code class='language-#{@language}'>#{output}</code></pre>
+        HTML
+      end
     end
   end
 end
 
-Liquid::Template.register_tag('prismc', Jekyll::PrismCompileBlock)
+Liquid::Template.register_tag('prismc', Jekyll::PrismJsCompile::Block)
