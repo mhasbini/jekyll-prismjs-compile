@@ -1,12 +1,14 @@
 # Jekyll::PrismCompileBlock
 
+![](screenshots/icon.png)
+
 Liquid tag for pre-processing [Prism.js](https://prismjs.com/) highlights
 
 ```
 {% prismc javascript %}
 var gem = "jekyll-prismjs-compile";
 
-console.log("gem");
+console.log(gem);
 {% endprismc %}
 ```
 
