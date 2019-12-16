@@ -12,6 +12,8 @@ console.log(gem);
 {% endprismc %}
 ```
 
+For more information please check [this blog post](https://mhasbini.com/blog/jekyll-prism-compile-plugin.html)
+
 ## Installation
 
 Add this line to your application's Gemfile:
