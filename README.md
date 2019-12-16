@@ -14,7 +14,11 @@ console.log("gem");
 
 Add this line to your application's Gemfile:
 
-    $ gem 'jekyll-prismjs-compile'
+```
+ group :jekyll_plugins do
+   gem "jekyll-prismjs-compile"
+ end
+```
 
 And then execute:
 
@@ -31,7 +35,7 @@ plugins:
   - jekyll-prismjs-compile
 ```
 
-💡 If you are using a Jekyll version less than 3.5.0, use the `gems` key instead of `plugins`.
+Please check [documentation](https://jekyllrb.com/docs/plugins/installation/) for more information on installation.
 
 ## Usage
 
